@@ -12,6 +12,7 @@
 		BDCC460627B67B070031AB7E /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC460527B67B070031AB7E /* EssentialFeedTests.swift */; };
 		BDCC460727B67B070031AB7E /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = BDCC45F927B67B060031AB7E /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BDCC461127B67D680031AB7E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC461027B67D680031AB7E /* FeedItem.swift */; };
+		BDCC461327B67E6E0031AB7E /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC461227B67E6E0031AB7E /* FeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		BDCC460027B67B070031AB7E /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCC460527B67B070031AB7E /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
 		BDCC461027B67D680031AB7E /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		BDCC461227B67E6E0031AB7E /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				BDCC45F927B67B060031AB7E /* EssentialFeed.h */,
 				BDCC45FA27B67B060031AB7E /* EssentialFeed.docc */,
 				BDCC461027B67D680031AB7E /* FeedItem.swift */,
+				BDCC461227B67E6E0031AB7E /* FeedLoader.swift */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDCC461327B67E6E0031AB7E /* FeedLoader.swift in Sources */,
 				BDCC461127B67D680031AB7E /* FeedItem.swift in Sources */,
 				BDCC45FB27B67B060031AB7E /* EssentialFeed.docc in Sources */,
 			);
