@@ -6,7 +6,7 @@
 //
 
 public enum HTTPCLientResult {
-    case success(HTTPURLResponse)
+    case success(Data, HTTPURLResponse)
     case failure(Error)
 }
 
