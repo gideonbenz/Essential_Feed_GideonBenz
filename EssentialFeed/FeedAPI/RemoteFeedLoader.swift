@@ -5,15 +5,6 @@
 //  Created by Gideon Benz on 12/02/22.
 //
 
-public enum HTTPCLientResult {
-    case success(Data, HTTPURLResponse)
-    case failure(Error)
-}
-
-public protocol HTTPClient {
-    func get(from url: URL, completion: @escaping (HTTPCLientResult) -> Void)
-}
-
 public final class RemoteFeedLoader {
     private  let url: URL
     private let client: HTTPClient
