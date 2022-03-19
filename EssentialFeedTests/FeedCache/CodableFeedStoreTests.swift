@@ -74,8 +74,12 @@ private final class CodableFeedStore {
             return completion(nil)
         }
         
-        try! FileManager.default.removeItem(at: storeURL)
-        completion(nil)
+        do {
+            try FileManager.default.removeItem(at: storeURL)
+            completion(nil)
+        } catch {
+            completion(error)
+        }
      }
 }
 
@@ -171,7 +175,7 @@ final class CodableFeedStoreTests: XCTestCase {
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
         
-        let deletionError = delete(from: sut)
+        let deletionError = deleteCache(from: sut)
         
         XCTAssertNil(deletionError, "Expected empty cache deletion to succeed")
          expect(sut, toRetrieve: .empty)
@@ -181,10 +185,20 @@ final class CodableFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         insert((uniqueImageFeed().local, Date()), to: sut)
         
-        let deletionError = delete(from: sut)
+        let deletionError = deleteCache(from: sut)
         
         XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
         expect(sut, toRetrieve: .empty)
+     }
+    
+    func test_delete_deliversErrorOnDeletionError() {
+         let noDeletePermissionURL = cachesDirectory()
+         let sut = makeSUT(storeURL: noDeletePermissionURL)
+
+         let deletionError = deleteCache(from: sut)
+
+         XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
+         expect(sut, toRetrieve: .empty)
      }
     
     // MARK: - Helpers
@@ -207,7 +221,7 @@ final class CodableFeedStoreTests: XCTestCase {
         return insertionError
     }
     
-    private func delete(from sut: CodableFeedStore) -> Error? {
+    private func deleteCache(from sut: CodableFeedStore) -> Error? {
         let exp = expectation(description: "Wait for cache deletion")
         var deletionError: Error?
         sut.deleteCachedFeed { receivedDeletionError in
@@ -259,6 +273,10 @@ final class CodableFeedStoreTests: XCTestCase {
     }
     
     private func testSpecificStoreURL() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
+        return cachesDirectory().appendingPathComponent("\(type(of: self)).store")
     }
+    
+    private func cachesDirectory() -> URL {
+         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+     }
 }
