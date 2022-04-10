@@ -53,52 +53,77 @@ Then the app should display an error message
 - URL
 
 #### Primary course (happy path):
-1. Execute "Load Feed Items" command with above data.
+1. Execute "Load Image Feed" command with above data.
 2. System downloads from the URL.
 3. System validates downloaded data.
-4. System creates feed items from valid data.
-5. System delivers feed items.
+4. System creates image feed from valid data.
+5. System delivers image feed.
 
 #### Invalid data - error course (sad path):
-1. System delivers error
+1. System delivers invalid data error.
 
 
 ### No connectivity - error course (sad path):
-1. System   error
+1. System delivers connectivity error.
 
 
 ---
-### Load Feed Fallback (Cache)
-
-#### Data
-- Max age
+### Load Feed From Cache Use Case
 
 #### Primary course:
-1. Execute "Retrieve Items" command with above data.
-2. System fetches feed data from cache.
-3. System creates feed items from cached data.
-4. System delivers feed items.
+1. Execute "Load Image Feed" command with above data.
+2. System retrieves feed data from cache.
+3. System validates cache is less than seven days old.
+3. System creates image feed from cached data.
+4. System delivers image feed.
 
-#### No cache course (sad path):
-1. System delivers no feed items.
+#### Retrieval Error course (sad path):
+1. System delivers error.
+
+#### Expired cache course (sad path):
+1. System delivers no feed images.
+
+#### Empty cache course (sad path):
+1. System delivers no feed images.
+
+
+### Validate Feed Cache Use Case
+
+#### Primary course:
+1. Execute "Validate Cache" command with above data.
+2. System retrieves feed data from cache.
+3. System validates cache is less than seven days old.
+
+#### Retrieval Error course (sad path):
+1. System deletes cache.
+
+#### Expired cache course (sad path):
+1. System delete cache.
 
 
 ---
-### Save Feed Items
+### Cache Feed Use Case
 
 #### Data
-- Feed items
+- Image Feed
 
 #### Primary course (happy path):
-1. Execute "Save Feed Items" command with above data.
-2. System encodes feed items.
-3. System timestamps the new cache.
-4. System replaces the cache with new data.
-5. System delivers success message.
+1. Execute "Save Image Feed" command with above data.
+2. System delete old cache data.
+3. System encodes image feed.
+4. System timestamps the new cache.
+5. System save new cache data.
+6. System delivers success message.
+
+#### Deleting error course (sad path):
+1. System delivers error.
+
+#### Saving error course (sad path):
+1. System delivers error.
 
 ## Flowchart
 
-![Essential Feed](detail_requirements_flowchart.png)
+![Essential Feed](feed_flowchart.png)
 
 ## Model Specs
 
