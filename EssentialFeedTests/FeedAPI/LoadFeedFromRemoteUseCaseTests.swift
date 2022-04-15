@@ -166,13 +166,13 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
     }
     
     private final class HTTPClientSpy: HTTPClient {
-        private var messages = [(url: URL, completion: (HTTPCLientResult) -> Void)]()
+        private var messages = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
         
         var requestedURLs: [URL] {
             messages.map { $0.url }
         }
         
-        func get(from url: URL, completion: @escaping (HTTPCLientResult) -> Void) {
+        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
             messages.append((url, completion))
         }
         
@@ -190,7 +190,7 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
                 return XCTFail("Failed creating response")
             }
             
-            messages[index].completion(.success(data, response))
+            messages[index].completion(.success((data, response)))
         }
     }
 }
