@@ -12,7 +12,7 @@
         <relationship name="cache" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="feed" inverseEntity="ManagedCache"/>
     </entity>
     <elements>
-        <element name="ManagedFeedImage" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="ManagedCache" positionX="-45" positionY="45" width="128" height="59"/>
+        <element name="ManagedFeedImage" positionX="-63" positionY="-18" width="128" height="104"/>
     </elements>
 </model>
