@@ -128,32 +128,20 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
         assertThatDeleteEmptiesPreviouslyInsertedCache(on: sut)
      }
     
-    /* this are failing tests, please look at this thread after reaching the module and fix it!
-     https://academy.essentialdeveloper.com/courses/447455/lectures/10675368/comments/7321729
-     */
     func test_delete_deliversErrorOnDeletionError() {
-        /*
-         let noDeletePermissionURL = cachesDirectory()
-         let sut = makeSUT(storeURL: noDeletePermissionURL)
+         let sut = makeSUT(storeURL: noDeletePermissionURL())
 
          let deletionError = deleteCache(from: sut)
 
          XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
-         */
      }
      
-    /* this are failing tests, please look at this thread after reaching the module and fix it!
-     https://academy.essentialdeveloper.com/courses/447455/lectures/10675368/comments/7321729
-     */
      func test_delete_hasNoSideEffectsOnDeletionError() {
-         /*
-          let noDeletePermissionURL = cachesDirectory()
-          let sut = makeSUT(storeURL: noDeletePermissionURL)
+          let sut = makeSUT(storeURL: noDeletePermissionURL())
 
           deleteCache(from: sut)
      
-          expect(sut, toRetrieve: .empty)
-          */
+          expect(sut, toRetrieve: .success(.none))
       }
     
     func test_storeSideEffects_runSerially() {
@@ -189,4 +177,8 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
     private func cachesDirectory() -> URL {
          return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
      }
+    
+    private func noDeletePermissionURL() -> URL {
+        return FileManager.default.urls(for: .cachesDirectory, in: .systemDomainMask).first!
+    }
 }
