@@ -392,7 +392,7 @@
 		BD96FC9C28140A94003968B4 /* FeedUI */ = {
 			isa = PBXGroup;
 			children = (
-				BD96FCA928141807003968B4 /* Composer */,
+				BD96FCA928141807003968B4 /* Composers */,
 				BD96FC9D28140AA6003968B4 /* Controllers */,
 				BD96FC9E28140ABA003968B4 /* Views */,
 			);
@@ -421,12 +421,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		BD96FCA928141807003968B4 /* Composer */ = {
+		BD96FCA928141807003968B4 /* Composers */ = {
 			isa = PBXGroup;
 			children = (
 				BD96FCAA28141822003968B4 /* FeedUIComposer.swift */,
 			);
-			path = Composer;
+			path = Composers;
 			sourceTree = "<group>";
 		};
 		BDAD1CA02802D7AA002895D0 /* Infrastructure */ = {
