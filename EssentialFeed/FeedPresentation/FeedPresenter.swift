@@ -5,10 +5,6 @@
 //  Created by Gideon Benz on 06/05/22.
 //
 
-public struct FeedViewModel {
-    public let feed: [FeedImage]
-}
-
 public protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
