@@ -34,6 +34,7 @@
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="MOU-bi-abu" id="efK-Wb-4WC"/>
+                                <outletCollection property="gestureRecognizers" destination="LsP-px-WMh" appends="YES" id="nZy-4s-tfv"/>
                             </connections>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="pGT-Qn-vv2">
@@ -166,6 +167,11 @@ Location</string>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RzX-Pc-Xwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="LsP-px-WMh">
+                    <connections>
+                        <action selector="hideMessageAnimated" destination="clu-9B-M8g" id="MBZ-Wh-KLe"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1105.7971014492755" y="-11.383928571428571"/>
         </scene>
