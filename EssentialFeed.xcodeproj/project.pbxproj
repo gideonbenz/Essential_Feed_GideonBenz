@@ -324,7 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				BD96FC9B28140A71003968B4 /* FeedImageLoader */,
-				BD92BF56281E4AA9002E6F9F /* FeedPresentation */,
 				BD96FC9C28140A94003968B4 /* FeedUI */,
 			);
 			path = EssentialFeediOS;
@@ -387,13 +386,6 @@
 				BD076CF727D37D0700A51946 /* FeedCacheTestHelpers.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		BD92BF56281E4AA9002E6F9F /* FeedPresentation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FeedPresentation;
 			sourceTree = "<group>";
 		};
 		BD92BF6D2820D304002E6F9F /* Helpers */ = {
