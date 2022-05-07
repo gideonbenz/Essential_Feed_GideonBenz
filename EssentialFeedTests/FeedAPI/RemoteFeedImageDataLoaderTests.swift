@@ -52,21 +52,13 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
-    func test_load_deliversErrorOnClientError() {
-        let url = URL(string: "https://a-given-url.com")!
+    func test_loadImageDataFromURL_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         let clientError = NSError(domain: "a client error", code: 0)
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.loadImageData(from: url) { result in
-            if case let .failure(receivedError as NSError) = result {
-                XCTAssertEqual(receivedError, clientError)
-                exp.fulfill()
-            }
-        }
-        client.complete(with: clientError)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .failure(clientError), when: {
+            client.complete(with: clientError)
+        })
     }
     
     // MARK: - Helpers
@@ -77,6 +69,27 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, client)
+    }
+    
+    private func expect(_ sut: RemoteFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: (() -> Void), file: StaticString = #file, line: UInt = #line) {
+        let url = URL(string: "https://a-given-url.com")!
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.loadImageData(from: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError as NSError), (.failure(expectedError as NSError))):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+                
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private final class HTTPClientSpy: HTTPClient {
