@@ -159,10 +159,12 @@ class RemoteFeedImageDataLoaderTests: XCTestCase {
     
     private final class HTTPClientSpy: HTTPClient {
         private var messages = [(url: URL, completion: ((HTTPClient.Result) -> Void))]()
-        var requestedURLs = [URL]()
+        
+        var requestedURLs: [URL] {
+            messages.map { $0.url }
+        }
          
         func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-            requestedURLs.append(url)
             messages.append((url: url, completion: completion))
         }
         
