@@ -6,20 +6,26 @@
 //
 
 import XCTest
+import EssentialFeed
 
 protocol FeedImageDataStore {
     func retrieve(dataForURL url: URL)
 }
 
 final class LocalFeedImageDataLoader {
+    private struct Task: FeedImageDataLoaderTask {
+        func cancel() {}
+    }
+    
     private let store: FeedImageDataStore
     
     init(store: FeedImageDataStore) {
         self.store = store
     }
     
-    func loadImageData(from url: URL) {
+    func loadImageData(from url: URL, completion: @escaping ((FeedImageDataLoader.Result) -> Void)) -> FeedImageDataLoaderTask {
         store.retrieve(dataForURL: url)
+        return Task()
     }
 }
 
@@ -35,7 +41,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         let (sut, store) = makeSUT()
         let url = anyURL()
         
-        sut.loadImageData(from: url)
+        _ = sut.loadImageData(from: url) { _ in }
         
         XCTAssertEqual(store.receivedMessage, [.retrieve(dataFor: url)])
     }
