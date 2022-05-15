@@ -37,7 +37,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         
         sut.loadImageData(from: url)
         
-        XCTAssertEqual(store.receivedMessage, [url])
+        XCTAssertEqual(store.receivedMessage, [.retrieve(dataFor: url)])
     }
     
     // MARK: - Helpers
@@ -51,10 +51,14 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     }
     
     private final class StoreSpy: FeedImageDataStore {
-        var receivedMessage = [URL]()
+        enum Message: Equatable {
+            case retrieve(dataFor: URL)
+        }
+        
+        var receivedMessage = [Message]()
         
         func retrieve(dataForURL url: URL) {
-            receivedMessage.append(url)
+            receivedMessage.append(Message.retrieve(dataFor: url))
         }
     }
 }
