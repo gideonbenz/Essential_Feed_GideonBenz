@@ -56,23 +56,11 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     
     func test_loadImageDataFromURL_failsOnStoreError() {
         let (sut, store) = makeSUT()
-        let url = anyURL()
-        let expectedResult = failed()
         
-        let exp = expectation(description: "Wait for load completion")
-        
-        _ = sut.loadImageData(from: url) { receivedResult in
-            switch(receivedResult, expectedResult) {
-            case let (.failure(receivedError as LocalFeedImageDataLoader.Error), .failure(expectedError as LocalFeedImageDataLoader.Error)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult), got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        }
-        store.complete(with: anyNSError())
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: failed(), when: {
+            let retrievalError = anyNSError()
+            store.complete(with: retrievalError)
+        })
     }
     
     // MARK: - Helpers
@@ -87,6 +75,30 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     
     private func failed() -> FeedImageDataLoader.Result {
         return .failure(LocalFeedImageDataLoader.Error.failed)
+    }
+    
+    private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+        
+        _ = sut.loadImageData(from: anyURL()) { receivedResult in
+            switch(receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+                
+            case let (.failure(receivedError as LocalFeedImageDataLoader.Error),
+                        .failure(expectedError as LocalFeedImageDataLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+                
+            default:
+                XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private final class StoreSpy: FeedImageDataStore {
