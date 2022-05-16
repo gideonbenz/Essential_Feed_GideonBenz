@@ -46,7 +46,6 @@ public final class CoreDataFeedStore {
     }
     
     deinit {
-        //causing error commented for now
-//        cleanUpReferencesToPersistentStores()
+        cleanUpReferencesToPersistentStores()
     }
 }
