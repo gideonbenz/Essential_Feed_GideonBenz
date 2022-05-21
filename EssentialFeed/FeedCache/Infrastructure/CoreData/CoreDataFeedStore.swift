@@ -6,7 +6,6 @@
 //
 
 import CoreData
-import AppKit
 
 public final class CoreDataFeedStore {
     private static let modelName = "FeedStore"
